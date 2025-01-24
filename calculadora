@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Campanha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .results {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Campanha</h1>
+    
+    <label for="orcamento">Orçamento Total (R$):</label>
+    <input type="number" id="orcamento" placeholder="Ex.: 2377.69">
+
+    <label for="meta_seguidores">Meta de Seguidores:</label>
+    <input type="number" id="meta_seguidores" placeholder="Ex.: 18000">
+
+    <label for="cpf_atual">CPF Atual:</label>
+    <input type="number" step="0.01" id="cpf_atual" placeholder="Ex.: 0.77">
+
+    <label for="dias_campanha">Dias de Campanha:</label>
+    <input type="number" id="dias_campanha" placeholder="Ex.: 10">
+
+    <label for="postagens">Número de Postagens Ativas:</label>
+    <input type="number" id="postagens" placeholder="Ex.: 5">
+
+    <label for="meta_final">Meta Final de Seguidores:</label>
+    <input type="number" id="meta_final" placeholder="Ex.: 250287">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultados" class="results"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      // Inputs
+      const orcamento = parseFloat(document.getElementById('orcamento').value);
+      const metaSeguidores = parseInt(document.getElementById('meta_seguidores').value);
+      const cpfAtual = parseFloat(document.getElementById('cpf_atual').value);
+      const diasCampanha = parseInt(document.getElementById('dias_campanha').value);
+      const postagens = parseInt(document.getElementById('postagens').value);
+      const metaFinal = parseInt(document.getElementById('meta_final').value);
+
+      // Cálculos
+      const orcamentoDiario = (orcamento / diasCampanha).toFixed(2);
+      const seguidoresProjetados = Math.floor(metaSeguidores * cpfAtual);
+      const cpfNecessario = (metaSeguidores / seguidoresProjetados).toFixed(2);
+      const seguidoresPorDia = Math.floor(seguidoresProjetados / diasCampanha);
+      const orcamentoPorAnuncio = (orcamento / postagens).toFixed(2);
+
+      // Exibição dos resultados
+      const resultados = `
+        <h2>Resultados</h2>
+        <p><strong>Orçamento Diário:</strong> R$ ${orcamentoDiario}</p>
+        <p><strong>Seguidores Projetados:</strong> ${seguidoresProjetados}</p>
+        <p><strong>CPF Médio Necessário:</strong> ${cpfNecessario}</p>
+        <p><strong>Seguidores por Dia:</strong> ${seguidoresPorDia}</p>
+        <p><strong>Orçamento por Anúncio:</strong> R$ ${orcamentoPorAnuncio}</p>
+      `;
+
+      document.getElementById('resultados').innerHTML = resultados;
+    }
+  </script>
+</body>
+</html>
